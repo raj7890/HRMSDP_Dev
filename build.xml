@@ -7,7 +7,9 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="HRMSDP_Demo" default="default" basedir="." xmlns:sonar="antlib:org.sonar.ant">
+<project name="HRMSDP_Demo" default="default" basedir="." xmlns:sonar="antlib:org.sonar.ant" xmlns:ivy="antlib:org.apache.ivy.ant">
+ 
+  
     <description>Builds, tests, and runs the project HRMSDP.</description>
     <import file="nbproject/build-impl.xml"/>
 		
@@ -65,8 +67,29 @@
  
     <!-- Execute SonarQube Scanner for Ant Analysis -->
     <sonar:sonar />
+</target>   
+     <target name="deploy">
+     <ivy:resolve/>
+    <ivy:publish resolver="nexus-releases"
+                 pubrevision="1.0"
+                 status="uplad"
+                 overwrite="true" 
+                 publishivy="false" >
+      <artifacts pattern="dist/HRMSDP.war" />
+    </ivy:publish>
+  </target>
+  <target name="copy.from.nexus">
+   <echo message="copying from nexus"/>    
+   <get src="http://localhost:8081/nexus/service/local/repositories/releases/content/org/sonatype/nexus/examples/HRMDSP/1.0/HRMDSP-1.0.war" dest="C:\\Users\\Dell\\Desktop\\Demo\\apache-tomcat-8.5.11\\webappsHRMDSP-1.0.war"/>
 </target>
-	
+   
+   
+   
+   
+   
+   
+   
+   
 
 	<!--
 
